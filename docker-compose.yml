@@ -1,0 +1,22 @@
+version: '3.4'
+services:
+  frontend:
+    restart: always
+    build:
+      context: frontend
+      dockerfile: Dockerfile.dev
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./frontend/:/usr/src/app:consistent
+      - /usr/src/app/node_modules
+
+
+  tests:
+    build:
+      context: frontend
+      dockerfile: Dockerfile.dev
+    volumes:
+      - ./frontend/:/usr/src/app:consistent
+      - /usr/src/app/node_modules
+    command: ["yarn", "test"]
